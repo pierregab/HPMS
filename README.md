@@ -37,7 +37,7 @@ Ensure you have Python 3.6 or later installed on your system. You can download P
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/HPMS.git
+git clone https://github.com/pierregab/HPMS.git
 cd HPMS
 ```
 
