@@ -36,7 +36,7 @@ CACHE_FILE = os.path.join(os.path.dirname(__file__), 'last_query.pkl')
 
 def parse_arguments():
     """
-    Parse command-line arguments for observation hour and reuse option.
+    Parse command-line arguments for observation hour, reuse option, and minimum altitude.
     """
     parser = argparse.ArgumentParser(
         description='Identify high proper motion stars visible from Strasbourg at a specified hour.'
@@ -51,6 +51,12 @@ def parse_arguments():
         '-r', '--reuse',
         action='store_true',
         help='Reuse the last query result from the cache.'
+    )
+    parser.add_argument(
+        '-m', '--min-altitude',
+        type=float,
+        default=30.0,
+        help='Minimum altitude (in degrees) for a star to be considered visible. Default is 30 degrees.'
     )
     return parser.parse_args()
 
@@ -153,6 +159,11 @@ def assign_units_if_needed(data, desired_unit):
 def main():
     # Parse command-line arguments
     args = parse_arguments()
+    
+    # Validate min_altitude
+    if not (0 <= args.min_altitude <= 90):
+        print("Error: Minimum altitude must be between 0 and 90 degrees.")
+        sys.exit(1)
     
     # Define Strasbourg's location
     strasbourg_location = EarthLocation(lat=48.5833*u.deg, lon=7.7500*u.deg, height=140*u.m)
@@ -275,8 +286,8 @@ def main():
         print(f"An error occurred during coordinate transformation: {e}")
         sys.exit(1)
 
-    # Define a minimum altitude for visibility (e.g., 30 degrees)
-    min_altitude = 30 * u.deg
+    # Define a minimum altitude for visibility (user-specified or default)
+    min_altitude = args.min_altitude * u.deg
 
     # Check which stars are above the minimum altitude
     visible = altaz_coords.alt >= min_altitude
