@@ -65,12 +65,6 @@ Install the required Python packages using `pip`:
 pip install numpy astroquery astropy astroplan
 ```
 
-*Alternatively, if a `requirements.txt` file is provided:*
-
-```bash
-pip install -r requirements.txt
-```
-
 ## Usage
 
 Run the `HPMS.py` script using Python. The script offers several options to customize the query and output.
