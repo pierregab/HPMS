@@ -1,29 +1,36 @@
 # High Proper Motion Stars (HPMS) Finder
-
 ## Table of Contents
 
 - [Introduction](#introduction)
 - [Features](#features)
 - [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Clone the Repository](#clone-the-repository)
+  - [Create a Virtual Environment (Optional but Recommended)](#create-a-virtual-environment-optional-but-recommended)
+  - [Install Dependencies](#install-dependencies)
 - [Usage](#usage)
   - [Basic Usage](#basic-usage)
   - [Advanced Options](#advanced-options)
 - [Examples](#examples)
+  - [Example 1: Basic Usage](#example-1-basic-usage)
+  - [Example 2: Specifying Observation Time and Reusing Cache](#example-2-specifying-observation-time-and-reusing-cache)
 - [Dependencies](#dependencies)
 - [Contributing](#contributing)
+  - [Steps to Contribute](#steps-to-contribute)
+  - [Code of Conduct](#code-of-conduct)
 - [License](#license)
 - [Contact](#contact)
 - [Acknowledgments](#acknowledgments)
 
 ## Introduction
 
-Welcome to the **High Proper Motion Stars (HPMS) Finder**! This Python-based tool allows astronomers and enthusiasts to identify and visualize high proper motion stars visible from Strasbourg at a specified local observation time. Leveraging data from the SIMBAD Astronomical Database via the TAP (Table Access Protocol) service, HPMS provides up-to-date information on stars with significant proper motion, enabling users to track their movement and visibility in the night sky.
+Welcome to the **High Proper Motion Stars (HPMS) Finder**! This Python-based tool empowers astronomers and enthusiasts to identify and visualize high proper motion stars visible from Strasbourg at a specified local observation time. Leveraging data from the [SIMBAD Astronomical Database](http://simbad.u-strasbg.fr/simbad/) via the TAP (Table Access Protocol) service, HPMS provides up-to-date information on stars with significant proper motion, enabling users to track their movement and visibility in the night sky.
 
 ## Features
 
 - **Query High Proper Motion Stars:** Retrieve stars with proper motion exceeding a specified threshold.
 - **Time-Based Position Updates:** Calculate and display updated positions based on proper motion for a given observation time.
-- **Visibility Check:** Determine which stars are above a minimum altitude (e.g., 30 degrees) from Strasbourg at the specified time.
+- **Visibility Check:** Determine which stars are above a user-defined minimum altitude from Strasbourg at the specified time.
 - **Sorting Options:** Sort the list of visible stars based on various parameters, including total movement, magnitude, and coordinates.
 - **Cache Results:** Save query results to a cache to speed up subsequent runs.
 - **User-Friendly Output:** Display results in a neatly formatted table, including both original (J2000) and updated coordinates.
@@ -32,7 +39,7 @@ Welcome to the **High Proper Motion Stars (HPMS) Finder**! This Python-based too
 
 ### Prerequisites
 
-Ensure you have Python 3.6 or later installed on your system. You can download Python from the [official website](https://www.python.org/downloads/).
+Ensure you have **Python 3.6** or later installed on your system. You can download Python from the [official website](https://www.python.org/downloads/).
 
 ### Clone the Repository
 
@@ -43,6 +50,8 @@ cd HPMS
 
 ### Create a Virtual Environment (Optional but Recommended)
 
+Creating a virtual environment helps manage dependencies and avoid conflicts with other Python projects.
+
 ```bash
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
@@ -50,8 +59,16 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 ### Install Dependencies
 
+Install the required Python packages using `pip`:
+
 ```bash
 pip install numpy astroquery astropy astroplan
+```
+
+*Alternatively, if a `requirements.txt` file is provided:*
+
+```bash
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -91,12 +108,22 @@ This command will:
   python3 HPMS.py -r
   ```
 
-- **Combine Options:**
+- **Set Minimum Altitude:**
 
-  You can combine both options to reuse cached data and specify an observation time.
+  Use the `-m` or `--min-altitude` flag to define the minimum altitude (in degrees) for a star to be considered visible. This allows you to customize the visibility threshold based on your observing conditions.
 
   ```bash
-  python3 HPMS.py -r -t 23.0
+  python3 HPMS.py -m 45
+  ```
+
+  *Example:* `45` sets the minimum altitude to 45 degrees.
+
+- **Combine Options:**
+
+  You can combine multiple options to refine your query further.
+
+  ```bash
+  python3 HPMS.py -r -t 23.0 -m 40
   ```
 
 ## Examples
@@ -157,10 +184,10 @@ Star A                      123.45678  -45.67890    124.00000    -45.50000      
 ... (additional stars)
 ```
 
-### Example 2: Specifying Observation Time and Reusing Cache
+### Example 2: Specifying Observation Time and Minimum Altitude
 
 ```bash
-python3 HPMS.py -r -t 23.0
+python3 HPMS.py -r -t 23.0 -m 40
 ```
 
 **Output:**
@@ -184,7 +211,7 @@ Updating star positions based on proper motion...
 High Proper Motion Stars Visible from Strasbourg at 23:00
 
 Checking visibility of stars at the specified observation time in Strasbourg...
-Number of stars visible above 30.0 deg: 22
+Number of stars visible above 40.0 deg: 22
 
 List of visible high proper motion stars:
 
@@ -219,7 +246,7 @@ HPMS relies on several Python libraries to function correctly. Ensure all depend
 - **numpy**: For numerical operations.
 - **astroquery**: To query the SIMBAD TAP service.
 - **astropy**: For handling astronomical data and units.
-- **astroplan**: For observer-related calculations, such as determining night time and visibility.
+- **astroplan**: For observer-related calculations, such as determining nighttime and visibility.
 
 ### Installing Dependencies
 
@@ -229,7 +256,7 @@ Use `pip` to install the required packages:
 pip install numpy astroquery astropy astroplan
 ```
 
-Alternatively, if a `requirements.txt` file is provided, install all dependencies at once:
+*Alternatively, if a `requirements.txt` file is provided, install all dependencies at once:*
 
 ```bash
 pip install -r requirements.txt
@@ -273,16 +300,16 @@ Contributions are welcome! Whether it's fixing bugs, improving performance, or a
 
 ### Code of Conduct
 
-Please adhere to the [Code of Conduct](https://github.com/yourusername/HPMS/blob/main/CODE_OF_CONDUCT.md) in all interactions.
+Please adhere to the [Code of Conduct](https://github.com/pierregab/HPMS/blob/main/CODE_OF_CONDUCT.md) in all interactions.
 
 ## License
 
-Distributed under the GNU License. See `LICENSE` for more information.
+Distributed under the [GNU License](https://github.com/pierregab/HPMS/blob/main/LICENSE). See `LICENSE` for more information.
 
 ## Contact
 
 - **Project Lead:** Pierre Gabriel Bibal Sobeaux
-- **Email:** pg.bibal@gmail.com
+- **Email:** [pg.bibal@gmail.com](mailto:pg.bibal@gmail.com)
 - **GitHub:** [pierregab](https://github.com/pierregab)
 
 Feel free to reach out with questions, suggestions, or feedback!
